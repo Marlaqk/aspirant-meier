@@ -45,7 +45,8 @@ function getUserList() {
         // The whole response has been received. Print out the result.
         resp.on('end', () => {
             var members = JSON.parse(data).members;
-            getPresence(members.filter(member => !member.is_bot && member.name !== 'slackbot'));
+            // filtering of slackbot does not work
+            getPresence(members.filter(member => !member.is_bot && !member.name.contains('slackbot')));
         });
 
     }).on("error", (err) => {
