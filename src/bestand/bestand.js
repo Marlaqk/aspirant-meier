@@ -3,7 +3,7 @@ const https = require('https');
 const fetch = require("node-fetch");
 // An access token (from your Slack app or custom integration - xoxa, xoxp, or xoxb)
 const token = process.env.OAUTH_TOKEN;
-const channelId = process.env.CHANNEL_RANDOM;
+const channelId = process.env.CHANNEL_GENERAL;
 // const channelId = process.env.CHANNEL_RALPH;
 
 const web = new WebClient(token);
