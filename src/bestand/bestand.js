@@ -46,7 +46,7 @@ function getUserList() {
         resp.on('end', () => {
             var members = JSON.parse(data).members;
             // filtering of slackbot does not work
-            getPresence(members.filter(member => !member.is_bot && !member.name.contains('slackbot')));
+            getPresence(members.filter(member => !member.is_bot && !member.name.includes('slackbot')));
         });
 
     }).on("error", (err) => {
