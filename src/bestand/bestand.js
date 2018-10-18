@@ -4,11 +4,9 @@ const fetch = require("node-fetch");
 // An access token (from your Slack app or custom integration - xoxa, xoxp, or xoxb)
 const token = process.env.OAUTH_TOKEN;
 const channelId = process.env.CHANNEL_GENERAL;
-// const channelId = process.env.CHANNEL_RALPH;
+//const channelId = process.env.CHANNEL_RALPH;
 
 const web = new WebClient(token);
-
-global.online = 0;
 
 // This argument can be a channel ID, a DM ID, a MPDM ID, or a group ID
 const conversationId = 'DCRMKLYKG';
@@ -55,15 +53,35 @@ function getUserList() {
 };
 
 async function getPresence(members) {
-    var complete = members.length + 1;
+    var online = 0;
+    var awayText = '';
+    var map = new Map();
     // length 6
     /*     members
             .forEach( member => getPresenceForMember(member)); */
     for (var i = 0; i < members.length; i++) {
-        await getPresenceForMember(members[i]);
+        if (await getPresenceForMember(members[i])) {
+            online++;
+        } else {
+            var status = members[i].profile.status_text;
+            if (map.has(status)) {
+                map.set(status, map.get(status)+1);
+            } else {
+                map.set(status, 1);
+            }
+        }
     }
-
-    sendBestandToRandom(complete, global.online);
+    map.forEach((value, key, map) => {
+        if (awayText > '') {
+            awayText += ', ';
+        }
+        if (key > "") {
+            awayText += value + "x mal " + key;
+        } else {
+            awayText += value + "x mal Offline";
+        }
+    });
+    sendBestandToRandom(members.length, online, awayText);
 }
 
 async function getPresenceForMember(member) {
@@ -72,16 +90,17 @@ async function getPresenceForMember(member) {
         const response = await fetch(url);
         const presenceData = await response.json();
         if (presenceData.presence === 'active') {
-            global.online++;
-            console.log('plus one');
+            return true;
         }
+        return false;
     } catch (error) {
         console.log(error);
     }
 }
 
-function sendBestandToRandom(complete, online) {
+function sendBestandToRandom(complete, online, awayText) {
     var msg = 'Zug Meier: Bestand ' + complete + ' Ahwesend ' + online;
+    if (awayText > '') msg += " " + awayText;
     web.chat.postMessage({ channel: channelId, text: msg })
         .then((res) => {
             // `res` contains information about the posted message
