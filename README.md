@@ -1,4 +1,4 @@
-# node-js-getting-started
+# aspirant-meier
 
 A barebones Node.js app using [Express 4](http://expressjs.com/).
 
@@ -8,25 +8,18 @@ This application supports the [Getting Started with Node on Heroku](https://devc
 
 Make sure you have [Node.js](http://nodejs.org/) and the [Heroku CLI](https://cli.heroku.com/) installed.
 
-```sh
-$ git clone https://github.com/heroku/node-js-getting-started.git # or clone your own fork
-$ cd node-js-getting-started
+```
+$ clone repo
 $ npm install
 $ npm start
 ```
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
 
-## Deploying to Heroku
-
-```
-$ heroku create
-$ git push heroku master
-$ heroku open
-```
-or
-
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+## Setup environement
+Create a .env file with the following value.
+OAUTH_TOKEN -> you can find it in the slack settings for our channel
+CHANNEL_ME -> use your own channelId for testing purposes
 
 ## Documentation
 
