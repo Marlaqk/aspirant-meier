@@ -18,7 +18,9 @@ Your app should now be running on [localhost:5000](http://localhost:5000/).
 
 ## Setup environement
 Create a .env file with the following value.
+
 OAUTH_TOKEN -> you can find it in the slack settings for our channel
+
 CHANNEL_ME -> use your own channelId for testing purposes
 
 ## Documentation
